@@ -33,8 +33,12 @@ class SocialiteController extends Controller
             $finduser = User::where('provider_id', $user->id)->first();
             if($finduser){
                 Auth::login($finduser);
-                dd(Auth::check());
-                return redirect()->intended('dashboard');
+                
+                // $user = Auth::user();
+                // $success['api_token'] =  $user->createToken('nApp')->accessToken;
+                // return response()->json(['status'=> true, 'data' => $success]);
+                
+                return redirect()->route('home');
             }else{
                 $newUser = User::create([
                     'name' => $user->name,
@@ -48,9 +52,9 @@ class SocialiteController extends Controller
                 Auth::login($newUser);
                 // // datates
                 // Auth::attempt(['email' => '']);
-                dd(Auth::check());
+                // dd(Auth::check());
       
-                return redirect()->intended('dashboard');
+                return redirect()->route('home');
             }
       
         } catch (ModelNotFoundException $e) {
